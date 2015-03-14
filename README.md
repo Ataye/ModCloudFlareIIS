@@ -1,6 +1,8 @@
 IIS Module for CloudFlare users 
 ================================
 
+***THIS VERSION WORKS WITH CLASSIC ASP*** - When using this with Classic ASP it caused errors when using request.form because the module consumes the request (and POST) objects. Cloudflare send the originating IP in the header and is available as the ServerVariable 'HTTP_CF_CONNECTING_IP'. This version uses request.ServerVariables insteado of just request and this does not consume .form making it avvailable to the ClassicASP pipeline.
+
 *Restores original visitor IP address to web applications running on IIS and using CloudFlare's performance and security service.
 
 *Adds original visitor IP address to logs
