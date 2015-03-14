@@ -61,11 +61,11 @@ namespace ModCloudFlareIIS
             HttpApplication app = (HttpApplication)source;
             HttpRequest request = app.Context.Request; 
                         
-            if (!String.IsNullOrEmpty(request["HTTP_CF_CONNECTING_IP"]))
+            if (!String.IsNullOrEmpty(request.ServerVariables["HTTP_CF_CONNECTING_IP"]))
             {
-                if (IsCloudFlareIP(request["REMOTE_ADDR"]))
+                if (IsCloudFlareIP(request.ServerVariables["REMOTE_ADDR"]))
                 {
-                    request.ServerVariables.Set("REMOTE_ADDR", request["HTTP_CF_CONNECTING_IP"]);
+                    request.ServerVariables.Set("REMOTE_ADDR", request.ServerVariables["HTTP_CF_CONNECTING_IP"]);
                 }
             }
         }
@@ -75,11 +75,11 @@ namespace ModCloudFlareIIS
             HttpApplication app = (HttpApplication)source;
             HttpRequest request = app.Context.Request;
 
-            if (!String.IsNullOrEmpty(request["HTTP_CF_CONNECTING_IP"]))
-               app.Response.AppendToLog("[CloudFlare_Visitor_IP:" + request["HTTP_CF_CONNECTING_IP"] + "]");
+            if (!String.IsNullOrEmpty(request.ServerVariables["HTTP_CF_CONNECTING_IP"]))
+               app.Response.AppendToLog("[CloudFlare_Visitor_IP:" + request.ServerVariables["HTTP_CF_CONNECTING_IP"] + "]");
 
-            if (!String.IsNullOrEmpty(request["HTTP_CF_RAY"]))
-                app.Response.AppendToLog("[CF_RAY:" + request["HTTP_CF_RAY"] + "]");
+            if (!String.IsNullOrEmpty(request.ServerVariables["HTTP_CF_RAY"]))
+                app.Response.AppendToLog("[CF_RAY:" + request.ServerVariables["HTTP_CF_RAY"] + "]");
         
         }
     }
